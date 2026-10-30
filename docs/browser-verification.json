@@ -1,0 +1,95 @@
+{
+  "release": "1.1.0",
+  "date": "2026-10-29",
+  "browser": "Chromium cloud browser; same-origin app QA iframes",
+  "widths": [
+    320,
+    375,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "height": 900,
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "suites": {
+    "core": {
+      "views": [
+        "home",
+        "path",
+        "reading",
+        "writing",
+        "audio",
+        "reference",
+        "progress",
+        "settings"
+      ],
+      "successfulChecks": 96
+    },
+    "lessons": {
+      "views": [
+        "lesson-register",
+        "quiz-marks",
+        "quiz-identity",
+        "quiz-objects",
+        "quiz-listen-vowels",
+        "guide-h-a"
+      ],
+      "successfulChecks": 72
+    },
+    "upgrade": {
+      "views": [
+        "quiz",
+        "reference-kanji",
+        "reference-mountain",
+        "reference-grammar"
+      ],
+      "successfulChecks": 48
+    },
+    "sessions": {
+      "views": [
+        "practice-active",
+        "practice-summary",
+        "reference-word"
+      ],
+      "successfulChecks": 36
+    }
+  },
+  "successfulChecks": 252,
+  "horizontalOverflow": 0,
+  "automatedAccessibilityViolations": 0,
+  "accidentalQuizUtilitySubmitButtons": 0,
+  "accessibilityTags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "retry": "Core suite stopped at the real API rate limit after 90 checks. Reference/progress/settings at1920 were later checked separately in both themes (6 passing checks). Error frames were not counted as successful.",
+  "journeys": [
+    "Hiragana Y-row continuous: first three questions unique; draft radio selection, option order, checked answers and score survive refresh; second round begins with a prior mistake and explains revisiting; no immediate repeat; finish saves skipped item and summary",
+    "Separate Focus on mistakes retry shortened to a one-question pool; shuffled choices;100% saved summary",
+    "Kanji mountain search/detail: learn-introduced, bookmark and contextual reading quiz; keyboard Space/Enter answer; finished summary survives refresh",
+    "Katakana dakuten test: saved wrong response and score concealed across refresh; next question distinct; Finish reveals correct/incorrect details and unvisited count",
+    "Guided lesson: two progressive hints, wrong-answer teaching feedback, deliberate skip of remaining exercises, separate independent typed-recall pool",
+    "Katakana typing prompt so answered \u30bd with spelling feedback"
+  ],
+  "limits": [
+    "No WCAG certification",
+    "NVDA/VoiceOver and other browser engines not exercised",
+    "Real phone soft keyboards, successful physical microphone capture, touch/stylus and browser-native200\u2013400% zoom remain unverified"
+  ],
+  "patchRecheck": {
+    "release": "1.1.1",
+    "date": "2026-10-30",
+    "repeatSuite": "sessions",
+    "successfulChecks": 36,
+    "horizontalOverflow": 0,
+    "automatedAccessibilityViolations": 0,
+    "accidentalQuizUtilitySubmitButtons": 0,
+    "note": "Repeated saved-session subset; not 252 newly repeated checks. New nature options, continuous cycle/refresh/Finish/focused retry, old-session Resume and concealed Katakana test journeys passed."
+  }
+}

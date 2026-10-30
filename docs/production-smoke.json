@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "at": "2026-10-29T19:06:38.586Z",
+  "checks": [
+    "compiled production server starts",
+    "explicit migration and seed into disposable file database",
+    "HTML and both built assets served",
+    "readiness healthy",
+    "unknown API is 404",
+    "public answer arrays omitted",
+    "development QA fixture absent from production JS and page",
+    "favicon SVG/PNG/ICO and Apple icon return valid image MIME types"
+  ],
+  "database": "SQLite smoke fixture; not PostgreSQL or Docker",
+  "buildBytes": [
+    {
+      "asset": "/assets/index-DY9bz3So.js",
+      "bytes": 337217
+    },
+    {
+      "asset": "/assets/index-Bg-6UpTY.css",
+      "bytes": 49425
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+import { performance } from 'node:perf_hooks';
+import { openStore } from '../server/db.js';
+import { createApp } from '../server/app.js';
+import { writeFileSync } from 'node:fs';
+process.env.SQLITE_PATH=':memory:';
+const db=await openStore();await db.migrate();const server=createApp(db).listen(0,'127.0.0.1');await new Promise<void>(r=>server.once('listening',r));const addr=server.address();const base=`http://127.0.0.1:${typeof addr==='object'&&addr?addr.port:0}`;
+try{const guest=await fetch(base+'/api/auth/guest',{method:'POST',headers:{'Content-Type':'application/json','X-Sumi-Request':'1'},body:'{}'});const cookie=guest.headers.get('set-cookie')!.split(';')[0];const output:Record<string,unknown>={environment:'Node 24, in-memory SQLite, loopback HTTP, single request at a time, fresh guest; excludes browser, TLS, real network, and production load',at:new Date().toISOString()};for(const path of ['/health','/state']){const times:number[]=[];for(let i=0;i<50;i++){const start=performance.now();const response=await fetch(base+'/api'+path,{headers:{Cookie:cookie}});if(!response.ok)throw new Error('Benchmark failed: '+response.status);await response.json();times.push(performance.now()-start);}times.sort((a,b)=>a-b);output[path]={requests:50,medianMs:+times[24].toFixed(2),p95Ms:+times[47].toFixed(2)};}writeFileSync('docs/performance.json',JSON.stringify(output,null,2)+'\n');console.log(JSON.stringify(output,null,2));}finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));await db.close();}

@@ -1,0 +1,35 @@
+{
+  "contentVersion": "2026.10.2",
+  "lessonVersions": [
+    3
+  ],
+  "bankVersions": [
+    2
+  ],
+  "lessons": 39,
+  "independentLessonItems": 124,
+  "guidedItems": 131,
+  "targetedCorrectionItems": 96,
+  "mcqBank": 547,
+  "mcqByScript": {
+    "hiragana": 214,
+    "katakana": 206,
+    "kanji": 127
+  },
+  "kanaEntriesPerScript": 104,
+  "basicKanaPerScript": 46,
+  "starterKanji": 32,
+  "vocabularyEntries": 278,
+  "originalReadingPassages": 3,
+  "orderedStrokeModels": 124,
+  "beginnerPlanDays": 30,
+  "lessonsByStage": {
+    "Foundations": 2,
+    "Hiragana": 16,
+    "Katakana": 13,
+    "Beginner": 4,
+    "Intermediate": 2,
+    "Advanced": 2
+  },
+  "scope": "Starter collection plus intermediate/advanced samples; not complete JLPT coverage. No educator/native-speaker review is claimed."
+}

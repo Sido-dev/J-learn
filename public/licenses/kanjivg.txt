@@ -1,0 +1,6 @@
+Ordered stroke path data: copyright 2009–2026 Ulrich Apel and KanjiVG contributors.
+Source: https://github.com/KanjiVG/kanjivg
+License: Creative Commons Attribution-ShareAlike 3.0, https://creativecommons.org/licenses/by-sa/3.0/
+Changes: ordered path d attributes extracted; 109x109 coordinates retained; display scales paths.
+Original source hashes and filenames: docs/stroke-provenance.json in the source package.
+No upstream endorsement is implied.

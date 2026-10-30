@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, applied_at BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, email TEXT UNIQUE, password_hash TEXT, name TEXT NOT NULL, preferences TEXT NOT NULL, created_at BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, csrf TEXT NOT NULL, expires_at BIGINT NOT NULL);
+CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at);
+CREATE TABLE IF NOT EXISTS lesson_versions (id TEXT NOT NULL, version INTEGER NOT NULL, snapshot TEXT NOT NULL, PRIMARY KEY(id,version));
+CREATE TABLE IF NOT EXISTS exercise_versions (id TEXT NOT NULL, version INTEGER NOT NULL, lesson_id TEXT NOT NULL, snapshot TEXT NOT NULL, PRIMARY KEY(id,version), FOREIGN KEY(lesson_id,version) REFERENCES lesson_versions(id,version));
+CREATE TABLE IF NOT EXISTS attempts (user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, id TEXT NOT NULL, lesson_id TEXT NOT NULL, version INTEGER NOT NULL, mode TEXT NOT NULL CHECK(mode IN ('lesson','review','placement')), payload_hash TEXT NOT NULL, result TEXT NOT NULL, created_at BIGINT NOT NULL, PRIMARY KEY(user_id,id), FOREIGN KEY(lesson_id,version) REFERENCES lesson_versions(id,version));
+CREATE INDEX IF NOT EXISTS attempts_user_time ON attempts(user_id,created_at);
+CREATE TABLE IF NOT EXISTS progress (user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, concept TEXT NOT NULL, skill TEXT NOT NULL CHECK(skill IN ('reading','comprehension','writing','listening','speaking')), state TEXT NOT NULL, PRIMARY KEY(user_id,concept,skill));
+CREATE TABLE IF NOT EXISTS reviews (user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, question_id TEXT NOT NULL, version INTEGER NOT NULL, lesson_id TEXT NOT NULL, due_at BIGINT NOT NULL, PRIMARY KEY(user_id,question_id), FOREIGN KEY(question_id,version) REFERENCES exercise_versions(id,version));
+CREATE INDEX IF NOT EXISTS reviews_due ON reviews(user_id,due_at);
+CREATE TABLE IF NOT EXISTS bookmarks (user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, item TEXT NOT NULL, created_at BIGINT NOT NULL, PRIMARY KEY(user_id,item));
+CREATE TABLE IF NOT EXISTS practice (user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, id TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN ('journal','drawing','speaking','reading','dictation')), content TEXT NOT NULL, created_at BIGINT NOT NULL, PRIMARY KEY(user_id,id));

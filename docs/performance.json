@@ -1,0 +1,14 @@
+{
+  "environment": "Node 24, in-memory SQLite, loopback HTTP, single request at a time, fresh guest; excludes browser, TLS, real network, and production load",
+  "at": "2026-10-29T17:46:24.919Z",
+  "/health": {
+    "requests": 50,
+    "medianMs": 1.77,
+    "p95Ms": 13.79
+  },
+  "/state": {
+    "requests": 50,
+    "medianMs": 1.86,
+    "p95Ms": 4.14
+  }
+}

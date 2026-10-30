@@ -1,0 +1,71 @@
+{
+  "release": "1.1.1",
+  "at": "2026-10-29T19:12:05.179416+00:00",
+  "assets": [
+    {
+      "file": "dist/client/assets/index-Bg-6UpTY.css",
+      "bytes": 49425,
+      "gzipBytes": 10336
+    },
+    {
+      "file": "dist/client/assets/index-DY9bz3So.js",
+      "bytes": 337217,
+      "gzipBytes": 103806
+    },
+    {
+      "file": "dist/client/favicon.ico",
+      "bytes": 10963,
+      "gzipBytes": 10909
+    },
+    {
+      "file": "dist/client/icons/apple-touch-icon.png",
+      "bytes": 14968,
+      "gzipBytes": 14941
+    },
+    {
+      "file": "dist/client/icons/favicon-32.png",
+      "bytes": 1257,
+      "gzipBytes": 1280
+    },
+    {
+      "file": "dist/client/icons/favicon.svg",
+      "bytes": 343,
+      "gzipBytes": 260
+    },
+    {
+      "file": "dist/client/icons/icon-192.png",
+      "bytes": 14431,
+      "gzipBytes": 14385
+    },
+    {
+      "file": "dist/client/icons/icon-512.png",
+      "bytes": 71205,
+      "gzipBytes": 70546
+    },
+    {
+      "file": "dist/client/index.html",
+      "bytes": 844,
+      "gzipBytes": 473
+    },
+    {
+      "file": "dist/client/licenses/CC-BY-SA-3.0.txt",
+      "bytes": 265,
+      "gzipBytes": 201
+    },
+    {
+      "file": "dist/client/licenses/CC-BY-SA-4.0.txt",
+      "bytes": 265,
+      "gzipBytes": 197
+    },
+    {
+      "file": "dist/client/licenses/edrdg-licence.txt",
+      "bytes": 9614,
+      "gzipBytes": 3831
+    },
+    {
+      "file": "dist/client/licenses/kanjivg.txt",
+      "bytes": 454,
+      "gzipBytes": 322
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+/** Original editorial starter entries. Readings are word-dependent, not exhaustive. */
+export type KanjiEntry={id:string;char:string;meanings:string[];on:string[];kun:string[];strokes:number;topic:'numbers'|'nature'|'time'|'people'|'position';components:string;words:{jp:string;kana:string;en:string}[];sentence:{jp:string;kana:string;en:string};lessonId:string;source:string;strokeSource:string};
+const rows:[string,string,string,string,number,KanjiEntry['topic'],string,string,string,string,string,string,string,string,string,string][]=[
+ ['一','one','イチ、イツ','ひと、ひと.つ',1,'numbers','One horizontal stroke.','一つ','ひとつ','one thing','一月','いちがつ','January','一つください。','ひとつください。','One, please.'],
+ ['二','two','ニ','ふた、ふた.つ',2,'numbers','Two horizontal strokes.','二つ','ふたつ','two things','二月','にがつ','February','二つあります。','ふたつあります。','There are two things.'],
+ ['三','three','サン','み、み.つ、みっ.つ',3,'numbers','Three horizontal strokes.','三つ','みっつ','three things','三月','さんがつ','March','三つあります。','みっつあります。','There are three things.'],
+ ['四','four','シ','よ、よ.つ、よっ.つ、よん',5,'numbers','An enclosing 囗 shape surrounds the inner strokes.','四つ','よっつ','four things','四月','しがつ','April','四月です。','しがつです。','It is April.'],
+ ['五','five','ゴ','いつ、いつ.つ',4,'numbers','Interlocking strokes; stroke count is four, not five.','五つ','いつつ','five things','五分','ごふん','five minutes','五分です。','ごふんです。','It is five minutes.'],
+ ['六','six','ロク','む、む.つ、むっ.つ、むい',4,'numbers','A 亠-shaped top and two lower strokes (visual components).','六つ','むっつ','six things','六時','ろくじ','six o’clock','六時です。','ろくじです。','It is six o’clock.'],
+ ['七','seven','シチ','なな、なな.つ、なの',2,'numbers','A cross with a bent final stroke.','七つ','ななつ','seven things','七月','しちがつ','July','七月です。','しちがつです。','It is July.'],
+ ['八','eight','ハチ','や、や.つ、やっ.つ、よう',2,'numbers','Two separating strokes; 八 is also a radical form.','八つ','やっつ','eight things','八月','はちがつ','August','八月です。','はちがつです。','It is August.'],
+ ['九','nine','キュウ、ク','ここの、ここの.つ',2,'numbers','A descending stroke and a sweeping hooked stroke.','九つ','ここのつ','nine things','九月','くがつ','September','九月です。','くがつです。','It is September.'],
+ ['十','ten','ジュウ、ジッ','とお、と',2,'numbers','Two crossing strokes; 十 is also a radical form.','十','とお','ten (native counting)','十円','じゅうえん','ten yen','十円です。','じゅうえんです。','It is ten yen.'],
+ ['山','mountain','サン','やま',3,'nature','Three upward peaks; 山 is also a radical form.','山','やま','mountain','火山','かざん','volcano','山が見えます。','やまがみえます。','I can see a mountain.'],
+ ['川','river','セン','かわ',3,'nature','Three flowing vertical strokes; 川 is a radical form.','川','かわ','river','河川','かせん','rivers / waterways','川があります。','かわがあります。','There is a river.'],
+ ['木','tree;wood','モク、ボク','き、こ',4,'nature','木 is the tree/wood radical form.','木','き','tree','木曜日','もくようび','Thursday','木があります。','きがあります。','There is a tree.'],
+ ['林','grove;woods','リン','はやし',8,'nature','Two 木 components.','林','はやし','grove / woods','森林','しんりん','forests','林を歩きます。','はやしをあるきます。','I walk through the grove.'],
+ ['森','forest','シン','もり',12,'nature','Three 木 components.','森','もり','forest','森林','しんりん','forests','森は静かです。','もりはしずかです。','The forest is quiet.'],
+ ['日','day;sun','ニチ、ジツ','ひ、か',4,'time','日 is the sun/day radical form.','日曜日','にちようび','Sunday','休日','きゅうじつ','day off','日曜日です。','にちようびです。','It is Sunday.'],
+ ['月','moon;month','ゲツ、ガツ','つき',4,'time','月 is a moon component; similar shapes in other kanji may have other origins.','月','つき','moon','月曜日','げつようび','Monday','月が見えます。','つきがみえます。','I can see the moon.'],
+ ['火','fire','カ','ひ、ほ',4,'nature','火 is the fire radical form.','火','ひ','fire','火曜日','かようび','Tuesday','火を使います。','ひをつかいます。','I use fire.'],
+ ['水','water','スイ','みず',4,'nature','水 is the water radical form; 氵 is a common side form.','水','みず','water','水曜日','すいようび','Wednesday','水を飲みます。','みずをのみます。','I drink water.'],
+ ['土','earth;soil','ド、ト','つち',3,'nature','土 is the earth/soil radical form.','土','つち','soil','土曜日','どようび','Saturday','土があります。','つちがあります。','There is soil.'],
+ ['金','gold;money','キン、コン','かね、かな',8,'nature','金 is a metal/gold radical form.','金','かね','money','金曜日','きんようび','Friday','金曜日です。','きんようびです。','It is Friday.'],
+ ['人','person','ジン、ニン','ひと',2,'people','人 is a person radical form; 亻 is its common side form.','人','ひと','person','日本人','にほんじん','Japanese person','あの人は先生です。','あのひとはせんせいです。','That person is a teacher.'],
+ ['口','mouth','コウ、ク','くち',3,'people','A three-stroke enclosure; 口 is a radical form, distinct from 囗.','口','くち','mouth','入口','いりぐち','entrance','口を開けます。','くちをあけます。','I open my mouth.'],
+ ['目','eye','モク','め、ま',5,'people','目 is an eye radical form.','目','め','eye','目的','もくてき','purpose','目を閉じます。','めをとじます。','I close my eyes.'],
+ ['耳','ear','ジ','みみ',6,'people','耳 is an ear radical form.','耳','みみ','ear','耳元','みみもと','close to the ear','耳で聞きます。','みみでききます。','I listen with my ears.'],
+ ['手','hand','シュ','て、た',4,'people','手 is a hand radical form; 扌 is a common side form.','手','て','hand','手紙','てがみ','letter','手を洗います。','てをあらいます。','I wash my hands.'],
+ ['足','foot;leg;be sufficient','ソク','あし、た.りる、た.す',7,'people','A 口-shaped top above lower strokes; this is a visual breakdown.','足','あし','foot / leg','足りる','たりる','be sufficient','足が痛いです。','あしがいたいです。','My foot hurts.'],
+ ['大','big;large','ダイ、タイ','おお、おお.きい、おお.いに',3,'position','A broad central shape; 大 is also a radical form.','大きい','おおきい','big / large','大学','だいがく','university','大きい山です。','おおきいやまです。','It is a big mountain.'],
+ ['小','small;little','ショウ','ちい.さい、こ、お',3,'position','A central stroke and two side strokes; 小 is also a radical form.','小さい','ちいさい','small','小学校','しょうがっこう','elementary school','小さい木です。','ちいさいきです。','It is a small tree.'],
+ ['中','inside;middle','チュウ','なか',4,'position','A vertical stroke passes through a 口-shaped enclosure.','中','なか','inside','中国','ちゅうごく','China','箱の中です。','はこのなかです。','It is inside the box.'],
+ ['上','above;up','ジョウ','うえ、うわ、あ.がる、のぼ.る',3,'position','A short line and vertical stand above a baseline (visual description).','上','うえ','above / on top','上手','じょうず','skilled','机の上です。','つくえのうえです。','It is on the desk.'],
+ ['下','below;down','カ、ゲ','した、しも、さ.がる、くだ.る',3,'position','A stroke extends below a top line (visual description).','下','した','below / underneath','地下','ちか','underground','机の下です。','つくえのしたです。','It is under the desk.']
+];
+export const kanji:KanjiEntry[]=rows.map(([char,meaning,on,kun,strokes,topic,components,w1,r1,m1,w2,r2,m2,jp,kana,en])=>({id:'kanji-'+char,char,meanings:meaning.split(';'),on:on.split('、'),kun:kun.split('、'),strokes,topic,components,words:[{jp:w1,kana:r1,en:m1},{jp:w2,kana:r2,en:m2}],sentence:{jp,kana,en},lessonId:'kanji',source:'Original Sumi editorial entries; dictionary/reference sources and content-review limits are in Content sources.',strokeSource:`https://kanjivg.tagaini.net/viewer.html?file=${char.codePointAt(0)!.toString(16).padStart(5,'0')}.svg`}));

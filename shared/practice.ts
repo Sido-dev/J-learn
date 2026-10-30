@@ -1,0 +1,13 @@
+import type { Exercise,Skill } from './content.js';
+export type Script='hiragana'|'katakana'|'kanji';
+export type SessionMode='practice'|'test'|'continuous';
+export type PracticeConfig={script:Script;category:string;mode:SessionMode;focus:'all'|'mistakes';length:number;rows:string[];difficulty:'any'|'starter'|'standard';sourceSessionId?:string;questionId?:string;daily?:boolean};
+export type BankQuestion=Exercise & {type:'choice';options:string[];version:number;script:Script;category:string;row:string;topic?:string;difficulty:'starter'|'standard';lessonId:string;help:string};
+export type PublicQuestion={id:string;version:number;concept:string;skill:Skill;prompt:string;display?:string};
+export type PracticeOption={id:string;label:string};
+export type PracticeFeedback={correct:boolean;skipped:boolean;expected:string;explanation:string;units:string};
+export type PublicItem={id:string;position:number;cycle:number;question:PublicQuestion;options:PracticeOption[];answered:boolean;choiceId:string|null;feedback?:PracticeFeedback};
+export type PracticeSummary={total:number;answered:number;correct:number;skipped:number;notReached:number;accuracy:number;weakConcepts:string[];items:{id:string;question:PublicQuestion;choice:string|null;feedback:PracticeFeedback}[]};
+export type PublicSession={id:string;config:PracticeConfig;status:'active'|'finished';revision:number;cycle:number;poolSize:number;target:number;notice:string;current:PublicItem|null;answered:number;score:number|null;summary?:PracticeSummary};
+export const kanaCategories=[['basic','Basic characters'],['dakuten','Dakuten'],['handakuten','Handakuten'],['combined','Combined sounds'],['rows','Selected rows'],['mixed','Mixed practice'],['vocabulary','Word readings'],['bookmarks','Bookmarked material'],['learned','Previously learned'],['weak','Weak characters & mistakes']] as const;
+export const kanjiCategories=[['starter','Starter kanji'],['meaning','Meaning recognition'],['readings','Readings in taught words'],['numbers','Numbers'],['nature','Nature'],['people','People & body'],['time','Time'],['position','Position & size'],['vocabulary','Word readings'],['bookmarks','Bookmarked material'],['learned','Previously learned'],['weak','Weak kanji']] as const;
