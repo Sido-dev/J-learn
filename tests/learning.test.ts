@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalize,grade,evaluate,schedule,localDay,streakDays } from '../shared/learning.js';
 import { findLesson,lessons,publicLesson,kana,plan } from '../shared/content.js';
+import { lessonOptionOrder,withLessonOptionOrder } from '../src/lesson-options.js';
 const q=(id:string)=>lessons.flatMap(l=>l.exercises).find(q=>q.id===id)!;
 test('romanization accepts case, supported variants and spacing',()=>{assert.equal(normalize('  SHI  '),'shi');assert.ok(evaluate(q('h-s-1'),'SI').correct);assert.ok(evaluate(q('marks-kagi'),'Ka Gi').correct);assert.ok(evaluate(q('kata-coffee'),'kōhī').correct);});
 for(const [id,bad,good,detail] of [['marks-hoshi','hashi','hoshi','ほ as は'],['marks-kagi','gagi','kagi','Only ぎ'],['marks-pa','ba','pa','Handakuten'],['small-kya','kyuku','kyaku','ゃ as small ゅ']])test(`specific contrast: ${bad} → ${good}`,()=>{const r=evaluate(q(id),bad);assert.equal(r.correct,false);assert.ok(r.explanation.includes(detail));assert.ok(evaluate(q(id),good).correct);assert.ok(r.targeted);});
@@ -16,3 +17,22 @@ test('public content omits answer keys, feedback, and sound-unit solutions',()=>
 test('HTTP-preview UUID fallback creates valid distinct idempotency keys without randomUUID',async()=>{const {newId}=await import('../src/id.js');const original=Object.getOwnPropertyDescriptor(globalThis,'crypto')!;const {randomFillSync}=await import('node:crypto');try{Object.defineProperty(globalThis,'crypto',{value:{getRandomValues:(a:Uint8Array)=>randomFillSync(a)},configurable:true});const ids=new Set(Array.from({length:20},()=>newId()));assert.equal(ids.size,20);assert.ok([...ids].every(id=>/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(id)));}finally{Object.defineProperty(globalThis,'crypto',original);}});
 
 test('blocked browser draft storage degrades safely instead of crashing lessons',async()=>{const {loadText,saveText,removeText,clearUserDrafts}=await import('../src/storage.js');const original=Object.getOwnPropertyDescriptor(globalThis,'sessionStorage');try{Object.defineProperty(globalThis,'sessionStorage',{get(){throw new Error('Storage blocked');},configurable:true});assert.equal(loadText('draft'),'');assert.equal(saveText('draft','a'),false);assert.doesNotThrow(()=>removeText('draft'));assert.doesNotThrow(()=>clearUserDrafts('learner'));}finally{if(original)Object.defineProperty(globalThis,'sessionStorage',original);else Reflect.deleteProperty(globalThis,'sessionStorage');}});
+
+test('lesson MCQ choices shuffle independently and a saved order survives refresh',()=>{
+ const questions=lessons.flatMap(l=>[...l.guided||[],...l.exercises,...l.corrections||[]]).filter(q=>q.type==='choice'&&q.options?.length===4);
+ assert.ok(questions.length>10);
+ const publicQuestions=questions.map(q=>({id:q.id,type:q.type,options:[...q.options!],prompt:q.prompt,concept:q.concept,skill:q.skill}));
+ let seed=42;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+ const original=publicQuestions.map(q=>[...q.options]);
+ const orders=Array.from({length:300},()=>lessonOptionOrder(publicQuestions,undefined,random));
+ for(const [i,q] of questions.entries()){
+  assert.ok(orders.every(order=>order[q.id].length===4&&new Set(order[q.id]).size===4));
+  assert.ok(orders.every(order=>withLessonOptionOrder(publicQuestions[i],order).options!.filter(o=>q.answer.includes(o)).length===1));
+ }
+ const first=questions[0],positions=[0,0,0,0];for(const order of orders)positions[order[first.id].indexOf(first.answer[0])]++;
+ assert.ok(positions.every(count=>count>40),String(positions));
+ assert.deepEqual(lessonOptionOrder(publicQuestions,orders[0],()=>0),orders[0]);
+ assert.deepEqual(publicQuestions.map(q=>q.options),original);
+ const altered={...orders[0],[first.id]:['not an option',...orders[0][first.id].slice(1)]};
+ assert.deepEqual(new Set(lessonOptionOrder(publicQuestions,altered,()=>0)[first.id]),new Set(first.options));
+});
