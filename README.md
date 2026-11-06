@@ -2,7 +2,7 @@
 
 A working Japanese learning journal, built with React 19, TypeScript, Vite, Express 5, Zod, and PostgreSQL support. A file-backed SQLite database makes the local demo self-contained. There are no API keys, paid integrations, or trackers. Reliable stroke models are attributed to KanjiVG; reference sources and licences are bundled.
 
-**Release status:** functional, tested application with deployment preparation. **Not certified production-ready.** Read `docs/RELEASE-REPORT.md` for evidence and release blockers. Full N5–N1 content coverage, expert linguistic review, live PostgreSQL/container validation, and native audio are not claimed.
+**Release status:** functional, tested application with deployment preparation. **Not certified production-ready.** Read `docs/RELEASE-REPORT.md` for evidence and release blockers. Full N5–N1 content coverage, expert linguistic review, live PostgreSQL/TLS deployment validation, and native audio are not claimed. PostgreSQL integration and a container build have passed in GitHub Actions; see the CI evidence below.
 
 ## Run locally
 
@@ -24,7 +24,7 @@ npm run check
 npm audit
 ```
 
-`check` runs type checking, ESLint, 59 unit/integration tests, and a production build. Tests use disposable in-memory and file-backed SQLite databases and controlled clocks. To repeat the integration tests against an **empty disposable PostgreSQL test database**, set both `TEST_DATABASE_URL` and `DATABASE_URL`, then run `npm test`. Never point test credentials at a production database. A PostgreSQL CI service is configured, but that CI workflow has not run in this workspace.
+`check` runs type checking, ESLint, 59 unit/integration tests, and a production build. Tests use disposable in-memory and file-backed SQLite databases and controlled clocks. To repeat the integration tests against an **empty disposable PostgreSQL test database**, set both `TEST_DATABASE_URL` and `DATABASE_URL`, then run `npm test`. Never point test credentials at a production database. The configured workflow **passed** in [GitHub Actions run 41233623757](https://github.com/Sido-dev/J-learn/actions/runs/41233623757) on 31 October 2026 at commit `00dc38844516dd468df07f0c33906975e7382620`. Rechecked on 6 November 2026, its job metadata records success for `npm run check`, compiled smoke, the disposable PostgreSQL integration suite, the production-dependency audit and container build. See [docs/CI-EVIDENCE.json](docs/CI-EVIDENCE.json). This is CI evidence for that commit, not a claim of live deployment or a new local execution of those checks.
 
 Run `npm run smoke` after building to verify the compiled production server against a disposable SQLite file, or `npm run benchmark` for explicitly limited loopback measurements.
 
@@ -65,7 +65,7 @@ npm run build
 
 Produces `dist/client/`, `dist/server.js`, and `dist/migrate.js`. Configure a real `DATABASE_URL` and exact HTTPS `APP_ORIGIN`, run `node dist/migrate.js`, then start with `NODE_ENV=production node dist/server.js`. Run the migration/seed on **every release**, including content-only changes. Migration 002 adds sessions/guided records/durable completions and backfills existing progress without deleting history. Content is immutable by ID/version. Migrations are not automatically run in production unless explicitly enabled. See `.env.example`, `Dockerfile`, `compose.yaml`, and `docs/OPERATIONS.md`.
 
-Source code and build output are included in the handover archive. Dependencies and local test-user data are excluded. The application has not been published externally.
+Source code and build output are included in the handover archive. Dependencies and local test-user data are excluded. Live deployment status and HTTPS/database operating checks must be recorded separately in `docs/OPERATIONS.md`. This documentation update did not deploy or reverify an externally hosted instance.
 
 Release 1.1.1 / content 2026.10.2. See `CHANGELOG.md`, `docs/PRACTICE-SESSIONS.md`, `docs/CONTENT-SOURCES.md`, and `docs/BACKLOG.md`. Use `npm run inventory` to regenerate the checked content inventory.
 

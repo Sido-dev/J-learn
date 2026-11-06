@@ -2,11 +2,11 @@
 
 ## Suitable hosting target
 
-A single Docker-capable Linux host (for example an organization-managed VM) behind a TLS reverse proxy, with managed PostgreSQL 17 or the provided private Compose database, is a straightforward first target. The application binds port 3000. The Compose port is loopback-only so a TLS proxy must provide public access. No external environment has been provisioned or published.
+A single Docker-capable Linux host (for example an organization-managed VM) behind a TLS reverse proxy, with managed PostgreSQL 17 or the provided private Compose database, is a straightforward first target. The application binds port 3000. The Compose port is loopback-only so a TLS proxy must provide public access. An externally hosted environment was not reverified by this documentation update; record its actual URL, version and checks in the register below.
 
 1. Set `POSTGRES_PASSWORD` to a long unique, URL-safe random value (hex works well) in a protected environment file or secret manager. Set `APP_ORIGIN` to the exact HTTPS URL, without a trailing slash. Do not reuse the CI-only password.
 2. Review `.env.example`; set `TRUST_PROXY_HOPS` to the actual number of trusted reverse proxies (1 for the described VM/proxy arrangement). Do not expose the application port directly to the internet.
-3. Run `docker compose config` to validate interpolation, then `docker compose up --build -d`. The migration service runs the additive schema and content seed before app startup. This workflow needs Docker/PostgreSQL; it was not executed in this workspace.
+3. Run `docker compose config` to validate interpolation, then `docker compose up --build -d`. The migration service runs the additive schema and content seed before app startup. This Compose deployment sequence needs Docker/PostgreSQL. The cited CI run passed a container build and isolated PostgreSQL integration, but did not establish a deployed Compose/TLS service or a restore rehearsal.
 4. Configure the reverse proxy with automatic TLS, request-body limit at or above 96 KiB, sane connection timeouts, and forwarded HTTPS. Preserve cookies and Origin. Forward only from trusted proxy addresses. Add upstream request limiting if serving multiple app replicas.
 5. Check `/api/health` (process) and `/api/ready` (database), then smoke-test guest creation, account upgrade, login/logout, a quiz retry, review, bookmarks, journal, and export over HTTPS. Inspect Secure/HttpOnly/SameSite cookies and CSP headers in the live environment.
 
@@ -41,3 +41,22 @@ The client reports network/timeouts. MCQ question order, option order, answers, 
 ## Upgrade 1.0 → 1.1
 
 Stop writes, take an online backup (or approved PostgreSQL backup), install/build this release, and run `node dist/migrate.js` using the existing database. Verify schema migration 2, retained account/attempt counts, durable completions, a new four-option session, and a pre-existing attempt/export. Then start the new app. The migration regression test reconstructs the old schema and proves retained accounts/version-one content plus backfilled completions on SQLite. Live PostgreSQL/Compose upgrade and restore still require staging validation. Never run tests against the live database.
+
+
+## Verified CI evidence and live-operation register
+
+Documentation reconciled on 6 November 2026. The existing workflow succeeded for commit `00dc38844516dd468df07f0c33906975e7382620`: [GitHub Actions run 41233623757](https://github.com/Sido-dev/J-learn/actions/runs/41233623757). Code checks, compiled smoke, isolated PostgreSQL integration, production-dependency audit and container build all have successful job-step results. See `CI-EVIDENCE.json`. The workflow itself does not need replacement for this documentation correction.
+
+Use **Not verified in this update** for an unperformed operating check; do not infer completion from a build. User-reported deployment and independently observed live evidence should be labeled separately.
+
+| Operating check | Status in this update | Evidence the operator must record |
+|---|---|---|
+| Deployed version | Not verified in this update | Actual URL, commit/image digest, schema/content versions and check time |
+| Public HTTPS/cookies/headers | Not verified in this update | Verified certificate, Secure/HttpOnly/SameSite behavior and observed headers |
+| Managed PostgreSQL migration | Not verified in this update | Disposable staging run, migration versions and retained-record checks |
+| Restart and persistence | Not verified in this update | Before/after account/progress checks without exposing personal data |
+| Backup and restore | Not verified in this update | Restore into a separate empty staging database and observed validation results |
+| Application rollback | Not verified in this update | Previous image/version restored against compatible schema and checked behavior |
+| User acceptance | Not verified in this update | Guest/account, practice/refresh/finish, review/export outcomes and reviewer/date |
+
+When an operator performs a check, replace its status with the observed result, timestamp, environment and evidence reference. Do not paste credentials, session tokens, private exports or production connection strings into this document. Preserve the backup/restore safety instructions above.

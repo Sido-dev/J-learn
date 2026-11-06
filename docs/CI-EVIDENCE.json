@@ -1,0 +1,81 @@
+{
+  "verified_on": "2026-11-06",
+  "source": "GitHub Actions REST API run and jobs metadata",
+  "run_url": "https://github.com/Sido-dev/J-learn/actions/runs/41233623757",
+  "run_id": 41233623757,
+  "run_number": 2,
+  "head_sha": "00dc38844516dd468df07f0c33906975e7382620",
+  "head_branch": "main",
+  "conclusion": "success",
+  "completed_at": "2026-10-31T19:21:21Z",
+  "jobs": [
+    {
+      "name": "verify",
+      "conclusion": "success",
+      "html_url": "https://github.com/Sido-dev/J-learn/actions/runs/41233623757/job/124632725181",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run smoke",
+          "conclusion": "success"
+        },
+        {
+          "name": "PostgreSQL integration suite (isolated disposable CI database)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=moderate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate container build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Historical successful CI for the stated commit; no new J-learn execution in this patch.",
+    "Job-step metadata does not establish live deployment, backup/restore or user acceptance.",
+    "No exact test totals or fresh all-dependency vulnerability count inferred from metadata."
+  ]
+}
